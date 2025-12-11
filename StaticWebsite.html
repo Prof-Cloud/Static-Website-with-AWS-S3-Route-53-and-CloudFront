@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Static Website</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0f0f0f;
+            color: #e5e5e5;
+            font-family: "Segoe UI", Arial, sans-serif;
+            text-align: center;
+        }
+
+        header {
+            padding: 90px 20px 30px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #f2f2f2;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #b5b5b5;
+        }
+
+        .divider {
+            width: 110px;
+            height: 2px;
+            background: #333;
+            margin: 40px auto;
+        }
+
+        /* GIF main */
+        .gif-container img {
+            max-width: 320px;
+            border-radius: 6px;
+            border: 2px solid #1c1c1c;
+            box-shadow: 0 0 18px rgba(0,0,0,0.7);
+            margin: 20px auto;
+            transition: transform 0.25s ease;
+        }
+        .gif-container img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Additional GIF grid */
+        .gif-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 35px;
+            padding: 60px 0;
+        }
+
+        .gif-grid img {
+            width: 260px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #222;
+            filter: grayscale(100%);
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .gif-grid img:hover {
+            transform: scale(1.07);
+            box-shadow: 0 0 28px rgba(0,0,0,0.85);
+        }
+
+        /* About section */
+        .about {
+            max-width: 800px;
+            margin: 50px auto;
+            line-height: 1.7em;
+            padding: 0 20px;
+            color: #cacaca;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            margin-top: 70px;
+            padding-bottom: 40px;
+            font-size: 1rem;
+            color: #7a7a7a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Welcome human, to the static website.</h1>
+        <p>I am an S3 bucket but I’m more interesting than I look.</p>
+        <div class="divider"></div>
+    </header>
+
+    <!-- Your original main GIF -->
+    <div class="gif-container">
+        <img src="https://profcloudwebsite.s3.eu-west-2.amazonaws.com/Human+Robot.gif"
+             alt="Main GIF">
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- S3 Bucket talking about itself -->
+    <section class="about">
+        <p>
+            Hello. Yes, I'm an S3 bucket. The quiet workhorse of the internet.
+            I store things. I serve things. I don’t complain. I don’t crash.
+        </p>
+
+        <p>
+            Websites like this one sit inside me, waiting for someone like you to show up
+            and take a look. I don’t judge, whether you store GIFs, logs, cat photos,
+            or the deepest secrets of your cloud architecture.
+        </p>
+
+        <p>
+            I may be “static,” but believe me:
+            <strong>I keep the internet running one object at a time.</strong>
+        </p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Extra black & white / minimalist GIFs -->
+    <section class="gif-grid">
+
+        <!-- Abstract rotating shape -->
+        <img src="https://profcloudwebsite.s3.eu-west-2.amazonaws.com/Loading+page.gif" alt="BW GIF 1">
+
+        <!-- Clean looping lines -->
+        <img src="https://profcloudwebsite.s3.eu-west-2.amazonaws.com/Waiting.webp" alt="BW GIF 2">
+
+        <!-- High contrast geometry motion -->
+        <img src="https://profcloudwebsite.s3.eu-west-2.amazonaws.com/Silicon+Valley.gif" alt="BW GIF 3">
+
+    </section>
+
+    <footer>✨ Powered by AWS S3 – static but stylish ✨</footer>
+
+</body>
+</html>
