@@ -20,3 +20,17 @@ provider "aws" {
     }
   }
 }
+
+provider "aws" {
+  # CloudFront requires SSL certificates to be provisioned in us-east-1 region
+  alias = "acm_provider"
+
+  default_tags {
+    tags = {
+      TeamMember  = "Prof Cloud"
+      ManagedBy   = "Terraform"
+      Environment = "Dev"
+      Location    = "North Virigina"
+    }
+  }
+}

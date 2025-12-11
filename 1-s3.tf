@@ -1,10 +1,10 @@
 #Creating S3 bucket
-resource "aws_s3_bucket" "S3Robot" {
-  bucket = "S3Robot"
+resource "aws_s3_bucket" "S3_bucket" {
+  bucket = var.bucket_name
 
 
   tags = {
-    Name        = "S3 Robot"
+    Name = "S3 Robot"
   }
   #Allow terraform to delete the bucket even if files exist in the bucket
   force_destroy = true
@@ -12,25 +12,25 @@ resource "aws_s3_bucket" "S3Robot" {
 
 #Enabling bucket or no rules automatically
 resource "aws_s3_bucket_ownership_controls" "Drop_off_ownership" {
-  bucket = aws_s3_bucket.S3Robot.id
+  bucket = aws_s3_bucket.S3_bucket.id
 
   rule {
     object_ownership = "BucketOwnerEnforced"
   }
 }
 
-#Blocks all public access
+#Making S3 bucket private
 resource "aws_s3_bucket_public_access_block" "access_S3Robot" {
-  bucket                  = aws_s3_bucket.S3Robot.id
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+  bucket                  = aws_s3_bucket.S3_bucket.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 #Enabling versioning
 resource "aws_s3_bucket_versioning" "S3Robot_versioning" {
-  bucket = aws_s3_bucket.S3Robot.id
+  bucket = aws_s3_bucket.S3_bucket.id
 
   versioning_configuration {
     status = "Enabled"
@@ -39,7 +39,7 @@ resource "aws_s3_bucket_versioning" "S3Robot_versioning" {
 
 #Lifecycle rules
 resource "aws_s3_bucket_lifecycle_configuration" "S3Robot-lifecycle" {
-  bucket = aws_s3_bucket.S3Robot.id
+  bucket = aws_s3_bucket.S3_bucket.id
 
   rule {
     id = "Lifecycle rules"
