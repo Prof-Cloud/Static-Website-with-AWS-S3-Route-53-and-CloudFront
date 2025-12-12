@@ -11,19 +11,24 @@ resource "aws_route53_record" "cert" {
   # getvanish.io, or any www.getvanish.io or *.getvanish.io
   for_each = { for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => dvo }
 
-  zone_id = aws_route53_zone.primary.zone_id
+  zone_id = data.aws_route53_zone.primary.zone_id
   name    = each.value.resource_record_name #e.g. *.getvanish.io
   type    = each.value.resource_record_type #CNAME 
   ttl     = 60
   records = [each.value.resource_record_value] # value provided by ACM
 }
 
+#This resource pass execution and enter the certification status is "issued"
+resource "aws_acm_certificate_validation" "cert_validation" {
+  #provider = aws.acm_provider
+  certificate_arn = aws_acm_certificate.cert.arn
+  validation_record_fqdns = [for record in aws_route53_record.cert : record.fqdn]
+}
 
 #Route 53 alias record for the root domain
-
 resource "aws_route53_record" "root_alias" {
 
-  zone_id = aws_route53_zone.primary.zone_id
+  zone_id = data.aws_route53_zone.primary.zone_id
   name    = var.domain_name
   type    = "A"
 
