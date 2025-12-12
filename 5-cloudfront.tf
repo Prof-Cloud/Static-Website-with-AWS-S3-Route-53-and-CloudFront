@@ -58,12 +58,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   #Viewer Certificate
   #Required
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.cert.arn
+    acm_certificate_arn      = aws_acm_certificate_validation.cert_validation.certificate_arn
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2021"
   }
-
-  #Note, without this cloud fund might try using an ACM cert that is not yet issued, causing InvalidViewerCertificate error.
-  depends_on = [aws_acm_certificate.cert, aws_route53_record.cert]
 
 }
