@@ -20,30 +20,50 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     domain_name = aws_s3_bucket.S3_bucket.bucket_regional_domain_name
     origin_id   = "s3_origin"
 
-    #Attaching OAC 
-    s3_origin_config {
-      origin_access_control_id = aws_cloudfront_origin_access_control.OAC.id
+    #Note must be outside s3_origin_config
+    origin_access_control_id = aws_cloudfront_origin_access_control.OAC.id
+  }
+
+  #Cache 
+  default_cache_behavior {
+    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "s3_origin"
+
+    #redirect to HTTPS
+    viewer_protocol_policy = "redirect-to-https"
+
+    #Required by cloudfront
+    forwarded_values {
+      query_string = false
+
+      cookies {
+        forward = "none"
+      }
     }
   }
 
-#Cache 
-default_cache_behavior {
-  allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-  cached_methods   = ["GET", "HEAD"]
-  target_origin_id = "s3_origin"
+  #Price Class
+  #Controls where Cloudfront distributes your content
 
-  #redirect to HTTPS
-  viewer_protocol_policy = "redirect-to-https"
+  price_class = "PriceClass_100" #Cheapest - Only US, Canada and, Europe
 
-}
-#Price Class
-#Controls where Cloudfront distributes your content
-
-price_class = "PriceClass_100" #Cheapest - Only US, Canada and, Europe
-
-#Restrictions
+  #Restrictions
   restrictions {
     geo_restriction {
       restriction_type = "none" #No geoblocking
     }
   }
+
+  #Viewer Certificate
+  #Required
+  viewer_certificate {
+    acm_certificate_arn      = aws_acm_certificate.cert.arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
+  }
+
+  #Note, without this cloud fund might try using an ACM cert that is not yet issued, causing InvalidViewerCertificate error.
+  depends_on = [aws_acm_certificate.cert, aws_route53_record.cert]
+
+}
