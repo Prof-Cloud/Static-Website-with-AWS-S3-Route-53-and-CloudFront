@@ -23,7 +23,8 @@ provider "aws" {
 
 provider "aws" {
   # CloudFront requires SSL certificates to be provisioned in us-east-1 region
-  alias = "acm_provider"
+  alias  = "acm_provider"
+  region = "us-east-1"
 
   default_tags {
     tags = {
