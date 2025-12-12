@@ -1,13 +1,11 @@
 #Domain name
 variable "bucket_name" {
-  type        = string
-  description = "S3Robot"
+  default = "profclouds3"
 }
 
 #Domain name
 variable "domain_name" {
-  type        = string
-  description = "getvanish.io"
+  default = "getvanish.io"
 }
 
 #IAM Policy document that allows CLoudFront to acess objects in the S3 bucket
@@ -18,8 +16,13 @@ data "aws_iam_policy_document" "s3_cloudfront_policy" {
     resources = ["${aws_s3_bucket.S3_bucket.arn}/*"]
 
     principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.web.iam_arn]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
     }
   }
+}
+
+#Looking up the existing Hosted Zone ID by name
+data "aws_route53_zone" "primary" {
+  name = var.domain_name
 }
