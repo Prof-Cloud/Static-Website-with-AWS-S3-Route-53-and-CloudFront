@@ -5,7 +5,7 @@ resource "aws_acm_certificate" "cert" {
   domain_name       = var.domain_name
   validation_method = "DNS"
 
-provider = aws.acm_provider 
+  provider = aws.acm_provider
 
   tags = {
     Name = "Cloudfront SSL Cert"
