@@ -22,7 +22,8 @@ data "aws_iam_policy_document" "s3_cloudfront_policy" {
   }
 }
 
-#Looking up the existing Hosted Zone ID by name
-data "aws_route53_zone" "primary" {
-  name = var.domain_name
+variable "dns_record_ttl" {
+  default     = 600
+  type        = number
+  description = "TTL for DNS records"
 }

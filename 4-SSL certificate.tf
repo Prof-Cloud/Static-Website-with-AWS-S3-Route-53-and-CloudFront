@@ -2,9 +2,9 @@
 #cert on available in us-east-01
 
 resource "aws_acm_certificate" "cert" {
-  #provider = aws.acm_provider
-  domain_name       = var.domain_name
-  validation_method = "DNS"
+  domain_name               = var.domain_name
+  subject_alternative_names = ["*.${var.domain_name}"]
+  validation_method         = "DNS"
 
   tags = {
     Name = "Cloudfront SSL Cert"

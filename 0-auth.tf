@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "eu-west-2"
+  region = "us-east-1"
 
 
   default_tags {
@@ -21,6 +21,7 @@ provider "aws" {
   }
 }
 
+/*
 provider "aws" {
   # CloudFront requires SSL certificates to be provisioned in us-east-1 region
   alias  = "acm_provider"
@@ -35,3 +36,4 @@ provider "aws" {
     }
   }
 }
+*/
