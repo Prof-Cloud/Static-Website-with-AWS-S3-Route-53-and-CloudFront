@@ -28,6 +28,21 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_access_control_id = aws_cloudfront_origin_access_control.OAC.id
   }
 
+  #This handles "File Not Found"
+  custom_error_response {
+    error_code = 404
+    response_code = 200
+    response_page_path = "/error.html"
+    error_caching_min_ttl = 10
+  }
+
+  #This handles "Access Denied"
+  custom_error_response {
+    error_code = 403
+    response_code = 200
+    response_page_path = "/error.html"
+    error_caching_min_ttl = 10
+  }
   #Cache 
   default_cache_behavior {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
