@@ -15,6 +15,10 @@ resource "aws_cloudfront_origin_access_control" "OAC" {
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled = true
+  aliases = [var.domain_name]
+
+  #Homepage
+  default_root_object = "StaticWebsite.html"
 
   origin {
     domain_name = aws_s3_bucket.S3_bucket.bucket_regional_domain_name
