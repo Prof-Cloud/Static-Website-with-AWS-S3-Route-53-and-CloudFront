@@ -1,13 +1,3 @@
-#Create an SNS Topic to send alerts
-resource "aws_sns_topic" "alerts" {
-  name = "website-alerts"
-}
-##Add  email alert
-resource "aws_sns_topic_subscription" "email_alert" {
-  topic_arn = aws_sns_topic.alerts.arn
-  protocol = "email"
-  endpoint = "the.fire.dragon.mac@gmail.com" #add your emaul
-}
 
 ##CloudWatch Alarm 
 resource "aws_cloudwatch_metric_alarm" "error_4xx" {
@@ -21,6 +11,7 @@ resource "aws_cloudwatch_metric_alarm" "error_4xx" {
   threshold = "10" ##Alert if >10% pf requests are errors
   alarm_description = "This alarm fires if the CloudWatch error rate is too high"
 
+#Connecting to SNS topic
 dimensions = {
     distributionID = aws_cloudfront_distribution.s3_distribution.id 
     region = "Global"
