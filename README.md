@@ -2,6 +2,10 @@
 
 In this project, I built a highly secure and scalable static website for the domain "getvanish.io" using AWS. I created the entire infrastructure using Terraform. I used a private S3 bucket, a Cloudfront distribution, an SNS topic, a Route 53 DNS, and Cloudwatch. To ensure the site was production-ready, I implemented an SSL certificate for HTTPS and used Origin Access Control (OAC) to keep the S3 bucket hidden from the public internet. Additionally, integrating CloudWatch Alarms and SNS allows me to receive alerts via email if users start encountering error pages, ensuring I can monitor the site's health in real-time.
 
+
+<img width="4518" height="1943" alt="Blank diagram (1)" src="https://github.com/user-attachments/assets/dedef41a-8625-4d69-bfca-3990d7f2a916" />
+
+
 ## Highlighting the Important Features
 
 1. Private S3 bucket - I created an S3 bucket to host the static website files, but kept it completely private by blocking ALL public access.
